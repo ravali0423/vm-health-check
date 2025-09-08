@@ -8,9 +8,9 @@ RED="\033[0;31m"
 RESET="\033[0m"
 
 # Thresholds
-CPU_THRESHOLD=1
-MEM_THRESHOLD=1
-DISK_THRESHOLD=1
+CPU_THRESHOLD=80
+MEM_THRESHOLD=95
+DISK_THRESHOLD=90
 
 # Flags
 explain=false
@@ -115,7 +115,7 @@ main() {
 
     if [[ "$OSTYPE" == "darwin"* ]]; then
         # macOS logging
-        echo "[$timestamp] CPU: $cpu% | MEM: $mem_usage% | DISK: $disk_usage% | STATUS: $overall" >> ./vm_health.log 2>/dev/null
+        echo "[$timestamp] CPU: $cpu% | MEM: $mem_usage% | DISK: $disk_usage% | STATUS: $overall" >> /Users/rmukkavilli/Desktop/DevOPs/vm-health-check/vm_health.log 2>/dev/null
     else
         # Linux VM logging
         echo "[$timestamp] CPU: $cpu% | MEM: $mem_usage% | DISK: $disk_usage% | STATUS: $overall" >> /home/parimala_mukkavilli/vm-health-check/vm_health.log 2>/dev/null
