@@ -112,8 +112,7 @@ main() {
     esac
 
     timestamp=$(date +"%Y-%m-%d %H:%M:%S")
-    echo "[$timestamp] CPU: $cpu% | MEM: $mem_usage% | DISK: $disk_usage% | STATUS: $overall" >> ./vm_health.log 2>/dev/null
-
+    echo "[$timestamp] CPU: $cpu% | MEM: $mem_usage% | DISK: $disk_usage% | STATUS: $overall" >> /home/parimala_mukkavilli/vm-health-check/vm_health.log 2>/dev/null
 
     exit $overall
 }
