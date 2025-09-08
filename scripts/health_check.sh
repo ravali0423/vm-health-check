@@ -112,7 +112,14 @@ main() {
     esac
 
     timestamp=$(date +"%Y-%m-%d %H:%M:%S")
-    echo "[$timestamp] CPU: $cpu% | MEM: $mem_usage% | DISK: $disk_usage% | STATUS: $overall" >> /home/parimala_mukkavilli/vm-health-check/vm_health.log 2>/dev/null
+
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        # macOS logging
+        echo "[$timestamp] CPU: $cpu% | MEM: $mem_usage% | DISK: $disk_usage% | STATUS: $overall" >> /Users/rmukkavilli/Desktop/DevOPs/vm-health-check/vm_health.log 2>/dev/null
+    else
+        # Linux VM logging
+        echo "[$timestamp] CPU: $cpu% | MEM: $mem_usage% | DISK: $disk_usage% | STATUS: $overall" >> /home/parimala_mukkavilli/vm-health-check/vm_health.log 2>/dev/null
+    fi
 
     exit $overall
 }
