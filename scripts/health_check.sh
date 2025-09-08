@@ -114,13 +114,26 @@ main() {
     timestamp=$(date +"%Y-%m-%d %H:%M:%S")
 
     if [[ "$OSTYPE" == "darwin"* ]]; then
-        # macOS logging
-        echo "[$timestamp] CPU: $cpu% | MEM: $mem_usage% | DISK: $disk_usage% | STATUS: $overall" >> /Users/rmukkavilli/Desktop/DevOPs/vm-health-check/vm_health.log 2>/dev/null
+        log_file="/Users/rmukkavilli/Desktop/DevOPs/vm-health-check/vm_health.log"
     else
-        # Linux VM logging
-        echo "[$timestamp] CPU: $cpu% | MEM: $mem_usage% | DISK: $disk_usage% | STATUS: $overall" >> /home/parimala_mukkavilli/vm-health-check/vm_health.log 2>/dev/null
+        log_file="/home/parimala_mukkavilli/vm-health-check/vm_health.log"
     fi
 
+    mkdir -p "$(dirname "$log_file")"
+    touch "$log_file"
+
+    echo "[$timestamp] CPU: $cpu% | MEM: $mem_usage% | DISK: $disk_usage% | STATUS: $overall" >> "$log_file" 2>/dev/null
+
+    # --------- Email Alerts ----------
+    send_email_alert() {
+        subject="[ALERT] VM Health Issue on $(hostname)"
+        body="[$timestamp] CPU: $cpu% | MEM: $mem_usage% | DISK: $disk_usage% | STATUS: $overall"
+        echo "$body" | mail -s "$subject" parimalaravali2016@gmail.com
+    }
+
+    if [ $overall -ge 0 ]; then
+        send_email_alert
+    fi
     exit $overall
 }
 
