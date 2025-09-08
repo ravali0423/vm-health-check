@@ -131,7 +131,7 @@ main() {
         echo "$body" | mail -s "$subject" parimalaravali2016@gmail.com
     }
 
-    if [ $overall -ge 0 ]; then
+    if [ $overall -ge 1 ]; then
         send_email_alert
     fi
     exit $overall
